@@ -6,11 +6,11 @@ import { FlatList, Text, StyleSheet, View } from 'react-native'
 
 import { LinearGradient } from 'expo-linear-gradient';
 
-const ListItem = React.memo( ({ label, style }) => (
-	<View style={ style }>
-		<Text>{ label }</Text>
+const ListItem = React.memo(({ label, style, textStyle }) => (
+	<View style={style}>
+		<Text style={textStyle}>{label}</Text>
 	</View>
-) );
+));
 
 /**
  *
@@ -21,26 +21,35 @@ const ListItem = React.memo( ({ label, style }) => (
  * @param {Number} [props.initialSelectedIndex]
  * @param {Number} [props.width]
  * @param {Number} [props.height]
+ * @param {String} [props.backgroundColor]
+ * @param {String} [props.fontColor]
+ * @param {Number} [props.fontSize]
  */
-const SwipePicker = ( { items, onChange, initialSelectedIndex = null, width, height } ) => {
+const SwipePicker = ({ items, onChange, initialSelectedIndex = null, width, height, backgroundColor,
+	fontColor, fontSize }) => {
 	let itemHeight = 40;
 	let listHeight = 200;
 
-	if ( height ) {
+	if (height) {
 		listHeight = height;
 		itemHeight = listHeight / 5;
 	}
 
-	const styles = StyleSheet.create( {
+	const styles = StyleSheet.create({
 		list: {
 			height: listHeight,
-			width: width
+			width: width,
+			backgroundColor: backgroundColor
 		},
 		listItem: {
 			height: itemHeight,
 			alignItems: 'center',
 			justifyContent: 'center',
-			fontSize: itemHeight / 2
+			fontSize: itemHeight / 2,
+		},
+		listItemText: {
+			color: fontColor,
+			fontSize: fontSize
 		},
 		pickerGradient: {
 			position: 'absolute',
@@ -53,9 +62,9 @@ const SwipePicker = ( { items, onChange, initialSelectedIndex = null, width, hei
 		bottomGradient: {
 			bottom: 0
 		}
-	} );
+	});
 
-	const flatList = useRef( null );
+	const flatList = useRef(null);
 
 	let extendedItems = [
 		{
@@ -74,49 +83,50 @@ const SwipePicker = ( { items, onChange, initialSelectedIndex = null, width, hei
 		{
 			value: -22,
 			label: ''
-		} ];
+		}];
 
 	return (
-		<View style={ styles.list } >
+		<View style={styles.list} >
 			<FlatList
 				showsVerticalScrollIndicator={false}
-				onMomentumScrollEnd={ ( event ) => {
-					let index = Math.round( event.nativeEvent.contentOffset.y / itemHeight );
-					onChange( { index, item: items[ index ] } );
-				} }
-				initialScrollIndex={ initialSelectedIndex }
-				ref={ flatList }
-				data={ extendedItems.map( item => ( {
+				onMomentumScrollEnd={(event) => {
+					let index = Math.round(event.nativeEvent.contentOffset.y / itemHeight);
+					onChange({ index, item: items[index] });
+				}}
+				initialScrollIndex={initialSelectedIndex}
+				ref={flatList}
+				data={extendedItems.map(item => ({
 					key: item.value.toString(),
 					...item
-				} ) ) }
-				renderItem={ item => (
+				}))}
+				renderItem={item => (
 					<ListItem
-						label={ item.item.label }
-						style={ styles.listItem } />
-				 ) }
-				getItemLayout={ ( _, index ) => ( { length: itemHeight, offset: index * itemHeight, index } ) }
-				snapToInterval={ itemHeight }
-				ListEmptyComponent={ () => <Text>No Items</Text> }
+						label={item.item.label}
+						style={styles.listItem}
+						textStyle={styles.listItemText} />
+				)}
+				getItemLayout={(_, index) => ({ length: itemHeight, offset: index * itemHeight, index })}
+				snapToInterval={itemHeight}
+				ListEmptyComponent={() => <Text>No Items</Text>}
 			/>
 			<LinearGradient
-				colors={ [
-					'rgba( 255, 255, 255, 1 )',
-					'rgba( 255, 255, 255, 0.9 )',
-					'rgba( 255, 255, 255, 0.7 )',
-					'rgba( 255, 255, 255, 0.5 )'
-				] }
-				style={ [ styles.pickerGradient, styles.topGradient ] }
+				colors={[
+					backgroundColor,
+					`${backgroundColor}e6`,
+					`${backgroundColor}b3`,
+					`${backgroundColor}80`,
+				]}
+				style={[styles.pickerGradient, styles.topGradient]}
 				pointerEvents="none"
 			/>
 			<LinearGradient
-				colors={ [
-					'rgba( 255, 255, 255, 0.5 )',
-					'rgba( 255, 255, 255, 0.7 )',
-					'rgba( 255, 255, 255, 0.9 )',
-					'rgba( 255, 255, 255, 1 )',
-				] }
-				style={ [ styles.pickerGradient, styles.bottomGradient ] }
+				colors={[
+					`${backgroundColor}80`,
+					`${backgroundColor}b3`,
+					`${backgroundColor}e6`,
+					backgroundColor,
+				]}
+				style={[styles.pickerGradient, styles.bottomGradient]}
 				pointerEvents="none"
 			/>
 		</View>
@@ -124,14 +134,17 @@ const SwipePicker = ( { items, onChange, initialSelectedIndex = null, width, hei
 }
 
 SwipePicker.propTypes = {
-	items: PropTypes.arrayOf( PropTypes.shape( {
-		value: PropTypes.oneOfType( [ PropTypes.string, PropTypes.number ] ),
+	items: PropTypes.arrayOf(PropTypes.shape({
+		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		label: PropTypes.string
-	} ) ),
+	})),
 	onChange: PropTypes.func,
 	initialSelectedIndex: PropTypes.number,
 	height: PropTypes.number,
-	width: PropTypes.number
+	width: PropTypes.number,
+	backgroundColor: PropTypes.string,
+	fontColor: PropTypes.string,
+	fontSize: PropTypes.number,
 }
 
 export default SwipePicker;

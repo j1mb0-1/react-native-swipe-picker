@@ -38,7 +38,6 @@ const SwipePicker = ({ items, onChange, initialSelectedIndex = null, width, heig
 		list: {
 			height: listHeight,
 			width: width,
-			backgroundColor: backgroundColor
 		},
 		listItem: {
 			height: itemHeight,

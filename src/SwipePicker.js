@@ -23,10 +23,9 @@ const ListItem = React.memo(({ label, style, textStyle }) => (
  * @param {Number} [props.height]
  * @param {String} [props.backgroundColor]
  * @param {String} [props.fontColor]
- * @param {Number} [props.fontSize]
  */
 const SwipePicker = ({ items, onChange, initialSelectedIndex = null, width, height, backgroundColor,
-	fontColor, fontSize }) => {
+	fontColor }) => {
 	let itemHeight = 40;
 	let listHeight = 200;
 
@@ -49,7 +48,6 @@ const SwipePicker = ({ items, onChange, initialSelectedIndex = null, width, heig
 		},
 		listItemText: {
 			color: fontColor,
-			fontSize: fontSize
 		},
 		pickerGradient: {
 			position: 'absolute',
@@ -144,7 +142,6 @@ SwipePicker.propTypes = {
 	width: PropTypes.number,
 	backgroundColor: PropTypes.string,
 	fontColor: PropTypes.string,
-	fontSize: PropTypes.number,
 }
 
 export default SwipePicker;

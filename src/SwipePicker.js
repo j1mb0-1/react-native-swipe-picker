@@ -44,10 +44,10 @@ const SwipePicker = ({ items, onChange, initialSelectedIndex = null, width, heig
 			height: itemHeight,
 			alignItems: 'center',
 			justifyContent: 'center',
-			fontSize: itemHeight / 2,
 		},
 		listItemText: {
 			color: fontColor,
+			fontSize: itemHeight / 1.5
 		},
 		pickerGradient: {
 			position: 'absolute',

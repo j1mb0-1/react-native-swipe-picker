@@ -38,6 +38,7 @@ const SwipePicker = ({ items, onChange, initialSelectedIndex = null, width, heig
 		list: {
 			height: listHeight,
 			width: width,
+			backgroundColor: backgroundColor,
 		},
 		listItem: {
 			height: itemHeight,
@@ -109,8 +110,6 @@ const SwipePicker = ({ items, onChange, initialSelectedIndex = null, width, heig
 			<LinearGradient
 				colors={[
 					backgroundColor,
-					`${backgroundColor}e6`,
-					`${backgroundColor}b3`,
 					`${backgroundColor}80`,
 				]}
 				style={[styles.pickerGradient, styles.topGradient]}
@@ -119,8 +118,6 @@ const SwipePicker = ({ items, onChange, initialSelectedIndex = null, width, heig
 			<LinearGradient
 				colors={[
 					`${backgroundColor}80`,
-					`${backgroundColor}b3`,
-					`${backgroundColor}e6`,
 					backgroundColor,
 				]}
 				style={[styles.pickerGradient, styles.bottomGradient]}

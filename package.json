@@ -17,6 +17,13 @@
     "picker"
   ],
   "author": "Nikolay Ninarski <nikolay.ninarski@gmail.com> (https://ninio.ninarski.com)",
+  "contributors": [
+    {
+      "name" : "j1mb0-1",
+      "email" : "jmb27408@gmail.com",
+      "url" : "https://github.com/j1mb0-1"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ninio/react-native-swipe-picker/issues"

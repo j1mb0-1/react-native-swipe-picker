@@ -79,6 +79,7 @@ const SwipePicker = ( { items, onChange, initialSelectedIndex = null, width, hei
 	return (
 		<View style={ styles.list } >
 			<FlatList
+				showsVerticalScrollIndicator={false}
 				onMomentumScrollEnd={ ( event ) => {
 					let index = Math.round( event.nativeEvent.contentOffset.y / itemHeight );
 					onChange( { index, item: items[ index ] } );
